@@ -1,0 +1,44 @@
+chrome:
+  user_data_dir: "C:\\facebook_bot_profile"
+  profile_directory: "Default"
+
+timeouts:
+  page_load: 30
+  modal_wait: 15
+  element_wait: 10
+  scroll_stale_rounds: 3
+  max_scroll_minutes: 10
+
+scroll:
+  pause_min: 1.0
+  pause_max: 3.0
+  pixel_step: 600
+
+selectors:
+  shares_link:
+    - "//a[contains(@href,'shares') or contains(@href,'share')]"
+    - "//span[contains(translate(., 'PARTAGES', 'partages'), 'partage')]/ancestor::a[1]"
+    - "//span[contains(translate(., 'SHARES', 'shares'), 'share')]/ancestor::a[1]"
+    - "//*[contains(@aria-label,'partage') or contains(@aria-label,'Partage') or contains(@aria-label,'share') or contains(@aria-label,'Share')]"
+    - "//*[(@role='button' or @role='link') and contains(translate(., 'PARTAGES', 'partages'), 'partage')]"
+    - "//span[contains(., 'partage') or contains(., 'Partage') or contains(., 'share') or contains(., 'Share')]"
+  cookie_buttons:
+    - "//button[contains(., 'Autoriser') or contains(., 'Accepter') or contains(., 'Allow') or contains(., 'Accept')]"
+    - "//div[@aria-label='Autoriser tous les cookies' or @aria-label='Allow all cookies']"
+  modal:
+    - "//div[@role='dialog']"
+    - "//div[contains(@aria-label,'partage') or contains(@aria-label,'Partage') or contains(@aria-label,'share') or contains(@aria-label,'Share')]"
+  profile_links:
+    - ".//a[contains(@href,'facebook.com') and not(contains(@href,'/shares')) and not(contains(@href,'/photo')) and not(contains(@href,'/posts')) and not(contains(@href,'/watch')) and not(contains(@href,'/reel'))]"
+
+ignore_names:
+  - "Partager"
+  - "Share"
+  - "Voir plus"
+  - "See more"
+  - "J'aime"
+  - "Like"
+  - "Commenter"
+  - "Comment"
+  - "Nom"
+  - "Profil"

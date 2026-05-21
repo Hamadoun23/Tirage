@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export Partages</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>Partages Facebook</h1>
+    <p class="subtitle">Sans droits admin — mode privé : autoriser l’extension (voir README)</p>
+  </header>
+
+  <section class="steps">
+    <p class="important">Ce n’est <strong>pas</strong> le bouton « Partager » (souvent absent).</p>
+    <ol>
+      <li>Ouvrez la publication (fenêtre comme sur votre capture)</li>
+      <li>Sous la photo : repérez la ligne<br>
+        <span class="example">270 · 195 · <strong>1,1 K</strong></span></li>
+      <li>Cliquez sur <strong>1,1 K</strong> (le chiffre des partages)</li>
+      <li>Puis <strong>Collecter</strong> — ou laissez l’extension essayer d’ouvrir la liste</li>
+    </ol>
+  </section>
+
+  <div class="actions">
+    <button id="btn-open" class="btn btn-outline">Ouvrir la liste (1,1 K)</button>
+    <button id="btn-collect" class="btn btn-primary">Collecter les partages</button>
+  </div>
+
+  <div id="status" class="status" aria-live="polite"></div>
+
+  <div id="results" class="results hidden">
+    <p class="count"><span id="count">0</span> participant(s)</p>
+    <div class="export-row">
+      <button id="btn-csv" class="btn btn-outline">CSV</button>
+      <button id="btn-xlsx" class="btn btn-outline">Excel (.xlsx)</button>
+    </div>
+    <button id="btn-copy" class="btn btn-ghost">Copier la liste</button>
+  </div>
+
+  <footer>
+    <p>Compatible tirage TmcSaga — colonne <em>Nom</em></p>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>

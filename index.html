@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu Tabaski — Toguna Mining Corporation</title>
+    <link rel="icon" type="image/jpeg" href="logo/toglogo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <img src="logo/Tmclogo.png" alt="Logo TMC" class="nav-logo">
+        <span class="nav-tagline">Toguna SARL Mining Corporation</span>
+    </nav>
+
+    <div class="page-wrapper">
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-text">
+                <span class="badge">Jeu Tabaski 2026</span>
+                <h1 class="hero-title">Gagnez un<br><span class="highlight">Mouton</span></h1>
+                <p class="hero-desc">
+                    Tirage au sort parmi les participants qualifiés.<br>
+                    Un mouton offert par Toguna Mining Corporation.
+                </p>
+                <div class="stat-badge">
+                    <span class="stat-label">Participants</span>
+                    <span class="stat-value" id="participant-count">0</span>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="img/mouton.png" alt="Mouton Tabaski" class="sheep-img">
+            </div>
+        </section>
+
+        <!-- Actions -->
+        <section class="actions-section">
+            <button id="list-button" class="btn btn-outline" disabled>
+                Voir les participants
+            </button>
+            <button id="draw-button" class="btn btn-primary" disabled>
+                Lancer le tirage
+            </button>
+        </section>
+
+        <!-- Liste participants -->
+        <section class="participants-section">
+            <div class="participants-card hidden" id="participants-card">
+                <div class="card-header">
+                    <h2>Participants</h2>
+                    <button class="close-button" id="close-list-button">✕</button>
+                </div>
+                <div class="participants-list" id="participants-list"></div>
+            </div>
+        </section>
+
+        <!-- Gagnant -->
+        <section class="winner-section">
+            <div class="winner-card hidden" id="winner-card">
+                <div class="winner-inner">
+                    <img src="img/mouton.png" alt="Mouton" class="winner-sheep">
+                    <div class="winner-content">
+                        <p class="winner-label">Félicitations</p>
+                        <div class="winner-name" id="winner-name"></div>
+                        <p class="winner-subtitle" id="winner-subtitle">
+                            Remporte un mouton offert par Toguna Mining Corporation
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Overlay de suspense -->
+    <div class="suspense-overlay hidden" id="suspense-overlay">
+        <div class="suspense-content">
+            <img src="img/mouton.png" alt="Mouton" class="suspense-sheep">
+            <div class="countdown" id="countdown">5</div>
+            <p class="suspense-text">Tirage en cours…</p>
+        </div>
+    </div>
+
+    <!-- Confettis -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

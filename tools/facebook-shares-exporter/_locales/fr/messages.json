@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "Export Partages Facebook"
+  },
+  "extDescription": {
+    "message": "Liste les partages visibles d'une publication Facebook et exporte en CSV ou Excel."
+  }
+}
