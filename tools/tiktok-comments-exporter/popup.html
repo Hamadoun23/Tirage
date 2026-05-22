@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export Commentateurs TikTok</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>Commentateurs TikTok</h1>
+    <p class="subtitle">v1.1 — comme Facebook : scrollez, puis ajoutez</p>
+  </header>
+
+  <section class="steps">
+    <ol>
+      <li>Onglet <strong>Commentaires</strong> ouvert</li>
+      <li><strong>Ajouter</strong> = commentaires visibles à l’écran</li>
+      <li><strong>Scrollez</strong> dans le panneau → recliquez <strong>Ajouter</strong></li>
+      <li>Quand tout est là → <strong>Excel</strong> ou CSV</li>
+    </ol>
+  </section>
+
+  <div class="actions">
+    <button id="btn-add" class="btn btn-primary">Ajouter (commentaires visibles)</button>
+    <button id="btn-auto" class="btn btn-secondary">Tout collecter (défilement auto)</button>
+    <button id="btn-reset" class="btn btn-ghost-inline">Réinitialiser la liste</button>
+  </div>
+
+  <div id="status" class="status" aria-live="polite"></div>
+
+  <div id="results" class="results hidden">
+    <p class="count">
+      <span id="count-users">0</span> commentateur(s) —
+      <span id="count-comments">0</span> commentaire(s)
+    </p>
+    <div class="export-row">
+      <button id="btn-csv" class="btn btn-outline">CSV</button>
+      <button id="btn-xlsx" class="btn btn-outline">Excel</button>
+    </div>
+    <button id="btn-copy" class="btn btn-ghost">Copier la liste</button>
+  </div>
+
+  <footer>
+    <p>17 commentaires → scrollez tout le panneau, « Ajouter » plusieurs fois.</p>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>

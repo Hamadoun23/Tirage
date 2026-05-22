@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "Export Commentateurs TikTok"
+  },
+  "extDescription": {
+    "message": "Liste les noms d'utilisateur des personnes qui ont commenté une publication TikTok."
+  }
+}
