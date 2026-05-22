@@ -1,8 +1,8 @@
 {
   "extName": {
-    "message": "Export Partages Facebook"
+    "message": "Export Partages FB v2"
   },
   "extDescription": {
-    "message": "Liste les partages visibles d'une publication Facebook et exporte en CSV ou Excel."
+    "message": "Compte les personnes qui ont partagé une publication (vous défilez, l’extension enregistre)."
   }
 }

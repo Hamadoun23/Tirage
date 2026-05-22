@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "Export Commentaires FB v2"
+  },
+  "extDescription": {
+    "message": "Liste les commentateurs : ID profil, nom et nombre de commentaires."
+  }
+}

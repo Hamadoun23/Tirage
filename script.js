@@ -1,8 +1,16 @@
 // Variables globales
 let candidates = [];
-let participantCount = 0;
+// Affichage hero : partages Facebook (le tirage utilise toujours la liste Excel)
+const FACEBOOK_SHARES_DISPLAY = '+7k';
 
-const IGNORED_NAMES = new Set(['nom', 'profil']);
+const POST_FILES = [
+    'post/Post1.xls',
+    'post/Post2.xls',
+    'post/Post3.xls',
+    'post/Post4.xls',
+    'post/Post5.xls'
+];
+const IGNORED_NAMES = new Set(['nom', 'profil', 'id_utilisateur']);
 
 function isProfileUrl(value) {
     const s = String(value).trim().toLowerCase();
@@ -10,12 +18,8 @@ function isProfileUrl(value) {
 }
 
 // Éléments du DOM
-const participantCountElement = document.getElementById('participant-count');
-const listButton = document.getElementById('list-button');
+const facebookSharesCountElement = document.getElementById('facebook-shares-count');
 const drawButton = document.getElementById('draw-button');
-const participantsCard = document.getElementById('participants-card');
-const participantsList = document.getElementById('participants-list');
-const closeListButton = document.getElementById('close-list-button');
 const winnerCard = document.getElementById('winner-card');
 const winnerName = document.getElementById('winner-name');
 const winnerSubtitle = document.getElementById('winner-subtitle');
@@ -24,44 +28,52 @@ const countdownElement = document.getElementById('countdown');
 const confettiCanvas = document.getElementById('confetti-canvas');
 
 /**
- * Charge automatiquement le fichier Excel au chargement de la page
+ * Lit un fichier Excel et renvoie les lignes (objets avec en-têtes)
+ */
+async function fetchExcelRows(filePath) {
+    const response = await fetch(filePath);
+    if (!response.ok) {
+        throw new Error(`${filePath} : HTTP ${response.status}`);
+    }
+    const arrayBuffer = await response.arrayBuffer();
+    const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    return XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+}
+
+/**
+ * Charge les 5 exports Facebook (post/Post1-5.xls) au chargement de la page
  */
 async function loadExcelFile() {
     const params = new URLSearchParams(window.location.search);
-    const excelFile = params.get('file') || 'Pronostic3.xlsx';
+    const singleFile = params.get('file');
 
     try {
-        const response = await fetch(excelFile);
-        
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP: ${response.status}`);
+        let rows = [];
+
+        if (singleFile) {
+            rows = await fetchExcelRows(singleFile);
+        } else {
+            const batches = await Promise.all(POST_FILES.map(fetchExcelRows));
+            rows = batches.flat();
         }
-        
-        const arrayBuffer = await response.arrayBuffer();
-        const data = new Uint8Array(arrayBuffer);
-        const workbook = XLSX.read(data, { type: 'array' });
-        
-        // Prendre la première feuille du classeur
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-        
-        // Convertir la feuille en tableau de tableaux
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { 
-            header: 1,
-            defval: '' // Valeur par défaut pour les cellules vides
-        });
-        
-        // Extraire les candidats
-        extractCandidates(jsonData);
-        
+
+        extractCandidatesFromRows(rows);
     } catch (error) {
-        console.error('Erreur lors du chargement du fichier Excel:', error);
-        alert(`Erreur lors du chargement de ${excelFile}.\n\nAssurez-vous que:\n1. Le fichier Excel existe (exports/ ou Pronostic3.xlsx)\n2. Vous ouvrez la page via un serveur local\n\nExemple : http://localhost:8000/?file=exports/participants_XXX.xlsx\n\nServeur : python -m http.server 8000`);
+        console.error('Erreur lors du chargement des fichiers Excel:', error);
+        alert(
+            'Erreur lors du chargement des participants.\n\n' +
+            'Vérifiez que les fichiers post/Post1.xls … Post5.xls existent ' +
+            'et ouvrez la page via un serveur local :\n\n' +
+            'python -m http.server 8000\n\n' +
+            'Puis : http://localhost:8000'
+        );
     }
 }
 
 // Charger le fichier Excel au chargement de la page
 window.addEventListener('DOMContentLoaded', () => {
+    initFacebookSharesBadge();
     loadExcelFile();
     
     // Ajuster la taille du canvas des confettis lors du redimensionnement
@@ -74,61 +86,47 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Extrait les candidats valides du tableau Excel
- * @param {Array} data - Tableau de données Excel
+ * Extrait les candidats depuis les colonnes Nom / ID_utilisateur
+ * @param {Array<Object>} rows - Lignes Excel (feuille Partages)
  */
-function extractCandidates(data) {
+function extractCandidatesFromRows(rows) {
+    const seen = new Set();
     candidates = [];
-    
-    // Parcourir toutes les lignes
-    for (let i = 0; i < data.length; i++) {
-        const row = data[i];
-        
-        // Parcourir toutes les colonnes de la ligne
-        for (let j = 0; j < row.length; j++) {
-            const cell = row[j];
-            
-            // Vérifier si la cellule contient une valeur valide
-            if (cell && typeof cell === 'string' && cell.trim() !== '') {
-                const trimmedName = cell.trim();
-                if (IGNORED_NAMES.has(trimmedName.toLowerCase()) || isProfileUrl(trimmedName)) {
-                    continue;
-                }
-                // Éviter les doublons
-                if (!candidates.includes(trimmedName)) {
-                    candidates.push(trimmedName);
-                }
-            } else if (cell && typeof cell === 'number') {
-                // Gérer les nombres (convertir en string)
-                const name = String(cell).trim();
-                if (name !== '' && !IGNORED_NAMES.has(name.toLowerCase()) && !isProfileUrl(name) && !candidates.includes(name)) {
-                    candidates.push(name);
-                }
-            }
+
+    for (const row of rows) {
+        const name = String(row.Nom ?? row.nom ?? '').trim();
+        const userId = String(row.ID_utilisateur ?? row.id_utilisateur ?? '').trim().toLowerCase();
+
+        if (!name || IGNORED_NAMES.has(name.toLowerCase()) || isProfileUrl(name)) {
+            continue;
         }
+
+        const key = userId || name.toLowerCase();
+        if (seen.has(key)) {
+            continue;
+        }
+        seen.add(key);
+        candidates.push(name);
     }
-    
-    // Mettre à jour l'interface
-    updateParticipantCount();
-    
-    // Activer les boutons si on a des candidats
+
+    candidates.sort((a, b) => a.localeCompare(b, 'fr'));
+
     if (candidates.length > 0) {
         drawButton.disabled = false;
-        listButton.disabled = false;
         winnerCard.classList.add('hidden');
     } else {
         drawButton.disabled = true;
-        listButton.disabled = true;
-        alert('Aucun candidat valide trouvé dans le fichier Excel.');
+        alert('Aucun candidat valide trouvé dans les fichiers Excel.');
     }
 }
 
 /**
- * Met à jour l'affichage du nombre de participants
+ * Affiche le nombre de partages Facebook dans le bandeau hero
  */
-function updateParticipantCount() {
-    participantCount = candidates.length;
-    participantCountElement.textContent = participantCount;
+function initFacebookSharesBadge() {
+    if (facebookSharesCountElement) {
+        facebookSharesCountElement.textContent = FACEBOOK_SHARES_DISPLAY;
+    }
 }
 
 /**
@@ -301,42 +299,5 @@ function drawWinner() {
     }, 5000);
 }
 
-/**
- * Affiche la liste des participants
- */
-function showParticipantsList() {
-    if (candidates.length === 0) {
-        alert('Aucun participant disponible.');
-        return;
-    }
-    
-    // Vider la liste actuelle
-    participantsList.innerHTML = '';
-    
-    // Créer les éléments de la liste
-    candidates.forEach((participant, index) => {
-        const participantItem = document.createElement('div');
-        participantItem.className = 'participant-item';
-        participantItem.textContent = `${index + 1}. ${participant}`;
-        participantsList.appendChild(participantItem);
-    });
-    
-    // Afficher la carte
-    participantsCard.classList.remove('hidden');
-    
-    // Scroll vers la liste
-    participantsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-/**
- * Cache la liste des participants
- */
-function hideParticipantsList() {
-    participantsCard.classList.add('hidden');
-}
-
-// Écouter les clics sur les boutons
-listButton.addEventListener('click', showParticipantsList);
-closeListButton.addEventListener('click', hideParticipantsList);
 drawButton.addEventListener('click', drawWinner);
 

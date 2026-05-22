@@ -3,7 +3,7 @@
   "name": "__MSG_extName__",
   "description": "__MSG_extDescription__",
   "default_locale": "fr",
-  "version": "2.0.3",
+  "version": "2.2.0",
   "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": [
     "https://www.facebook.com/*",
@@ -13,7 +13,7 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Partages FB v2"
+    "default_title": "Commentaires FB v2"
   },
   "icons": {
     "48": "icons/icon48.png",

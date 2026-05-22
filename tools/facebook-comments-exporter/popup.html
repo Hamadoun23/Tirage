@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export Commentateurs FB</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>Commentateurs Facebook</h1>
+    <p class="subtitle">v2.2 — ID profil + nom (URL) + nb commentaires</p>
+  </header>
+
+  <section class="steps">
+    <ol>
+      <li>Publication ouverte, <strong>Tous les commentaires</strong></li>
+      <li><strong>Collecter</strong> (plusieurs minutes)</li>
+      <li><strong>Excel</strong> : 1 ligne par personne qui a commenté</li>
+    </ol>
+    <p class="hint-export">Le nom vient du <strong>profil Facebook</strong>, pas du texte écrit dans le commentaire.</p>
+  </section>
+
+  <div class="actions">
+    <button id="btn-collect" class="btn btn-primary">Collecter les commentateurs</button>
+  </div>
+
+  <div id="status" class="status" aria-live="polite"></div>
+
+  <div id="results" class="results hidden">
+    <p class="count">
+      <span id="count-users">0</span> commentateur(s) —
+      <span id="count-comments">0</span> commentaire(s) au total
+    </p>
+    <div class="export-row">
+      <button id="btn-csv" class="btn btn-outline">CSV</button>
+      <button id="btn-xlsx" class="btn btn-outline">Excel</button>
+    </div>
+    <button id="btn-copy" class="btn btn-ghost">Copier la liste</button>
+  </div>
+
+  <footer>
+    <p>Excel : <em>Nom</em>, <em>ID_utilisateur</em>, <em>Profil</em>, <em>Nb_commentaires</em></p>
+    <p class="hint-export">Tirage TmcSaga : colonne <em>Nom</em> (1 entrée par personne).</p>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>

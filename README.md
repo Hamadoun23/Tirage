@@ -78,12 +78,17 @@ Assurez-vous que `Pronostic3.xlsx` est dans le même dossier que `index.html`.
 
 ## Préparer la liste depuis Facebook
 
-### Recommandé — extension Chrome (sans être admin)
+### Extensions Chrome (sans être admin)
 
-1. Installez l’extension : [tools/facebook-shares-exporter/README.md](tools/facebook-shares-exporter/README.md)
-2. Ouvrez la publication → cliquez **« X partages »**
-3. Extension → **Collecter** → export **CSV** ou **Excel**
-4. Utilisez le fichier pour `Pronostic3.xlsx` ou le tirage avec `?file=...`
+| Extension | Dossier | Exporte |
+|-----------|---------|---------|
+| **Partages** | [facebook-shares-exporter](tools/facebook-shares-exporter/README.md) | Noms des personnes qui ont partagé |
+| **Commentaires** | [facebook-comments-exporter](tools/facebook-comments-exporter/README.md) | Nom + texte de chaque commentaire |
+
+Installation : `chrome://extensions/` → mode développeur → charger le dossier de l’extension.
+
+Pour les **partages** : ouvrir « Personnes qui ont partagé » puis **Collecter**.  
+Pour les **commentaires** : ouvrir la publication (zone commentaires visible) puis **Collecter**.
 
 ### Alternative — script Python (compte admin Page)
 

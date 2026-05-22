@@ -1,0 +1,164 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 340px;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  background: #f5f8fc;
+}
+
+header {
+  padding: 14px 16px 10px;
+  background: linear-gradient(135deg, #0a57a4, #1a6bc4);
+  color: #fff;
+}
+
+header h1 {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 11px;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+
+.steps {
+  padding: 12px 16px;
+  background: #fff;
+  border-bottom: 1px solid #e0e8f0;
+}
+
+.steps ol {
+  margin-left: 18px;
+  line-height: 1.5;
+  color: #444;
+}
+
+.steps strong {
+  color: #0a57a4;
+}
+
+.important {
+  background: #fff8e6;
+  border: 1px solid #e6c200;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.actions {
+  padding: 12px 16px;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #0a57a4;
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #084a8c;
+}
+
+.btn-outline {
+  flex: 1;
+  background: #fff;
+  color: #0a57a4;
+  border: 1.5px solid #0a57a4;
+}
+
+.export-row {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-ghost {
+  margin-top: 8px;
+  background: transparent;
+  color: #666;
+  font-weight: 500;
+  width: 100%;
+}
+
+.status {
+  padding: 0 16px 12px;
+  font-size: 12px;
+  min-height: 18px;
+}
+
+.status.error { color: #b42318; }
+.status.ok { color: #0a57a4; }
+
+.results { padding: 0 16px 14px; }
+.results.hidden { display: none; }
+.count { font-weight: 600; margin-bottom: 10px; color: #0a57a4; }
+
+footer {
+  padding: 10px 16px;
+  font-size: 10px;
+  color: #888;
+  border-top: 1px solid #e0e8f0;
+  background: #fff;
+}
+
+footer em {
+  font-style: normal;
+  font-weight: 600;
+  color: #0a57a4;
+}
+
+.hint {
+  padding: 0 16px 10px;
+  font-size: 11px;
+  color: #666;
+}
+
+.hint-export {
+  font-size: 11px;
+  color: #555;
+  margin: 8px 0 0;
+  padding: 0 16px;
+}
+
+footer .hint-export {
+  padding: 0;
+  margin-top: 6px;
+}
+
+.warn-install {
+  background: #fff8e6;
+  border: 1px solid #e6c200;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+
+.warn-install code {
+  font-size: 11px;
+  background: #f5f5f5;
+  padding: 1px 4px;
+  border-radius: 3px;
+}

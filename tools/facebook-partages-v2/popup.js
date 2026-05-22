@@ -1,4 +1,4 @@
-const VERSION = '2.0.3';
+const VERSION = '2.0.0';
 let participants = [];
 
 const $ = (id) => document.getElementById(id);
@@ -113,10 +113,9 @@ function escapeCsv(v) {
 function toCsv(rows) {
   return (
     '\uFEFF' +
-    [
-      'Nom,ID_utilisateur,Profil',
-      ...rows.map((r) => [r.name, r.userId, r.profile].map(escapeCsv).join(',')),
-    ].join('\r\n')
+    ['Nom,ID_utilisateur,Profil', ...rows.map((r) => [r.name, r.userId, r.profile].map(escapeCsv).join(','))].join(
+      '\r\n',
+    )
   );
 }
 

@@ -1,0 +1,10 @@
+NE CHARGEZ PLUS CE DOSSIER DANS CHROME
+======================================
+
+Chrome affiche encore la version 1.1.0 à cause du cache.
+
+Utilisez le NOUVEAU dossier :
+
+  ..\facebook-partages-v2
+
+Voir INSTALL.txt dans facebook-partages-v2
